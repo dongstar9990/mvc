@@ -1,0 +1,74 @@
+﻿
+@model PagedList.IPagedList<WebApplication24.Models.Hang>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Danh sách Hàng</h2>
+
+@using (Html.BeginForm())
+            {
+                <p>
+                    Tìm mặt hàng :@Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="tìm" />
+                </p>
+            }
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Tên Hàng", "Index", new { sortOrder = ViewBag.SapTheoTen })
+        </th>
+        <th>
+            @Html.ActionLink("Gía", "Index", new {sortOrder =ViewBag.SapTheoGia})
+        </th>
+        <th>
+            số lượng có 
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Chiết khấu 
+        </th>
+        <th>
+            Hình ảnh 
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.TenHang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LuongCo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoTa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChietKhau)
+        </td>
+        <td>
+            <img src="~/Content/z3960376712971_730b2d25510fd877aee99c93d91f98d0.png" width="80" />
+            <br />
+            @Html.DisplayFor(modelItem => item.HinhAnh)
+        </td>
+        <td>
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.MaHang.Trim()})
+            @Html.ActionLink("Thêm vào giỏ ", "", new { id=item.MaHang.Trim()})
+        </td>
+    </tr>
+}
+
+</table>
