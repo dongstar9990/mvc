@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebApplication23.Models.SanPhamMua>
+@{
+    ViewBag.Title = "datMua";
+}
+
+<h2>Bạn đã đặt mua</h2>
+
+@{ 
+    List<WebApplication23.Models.SanPham> ds = (List<WebApplication23.Models.SanPham>)Session["hanghoa"];
+
+}
+
+<table width="500" class="table-bordered">
+    <tr style="background-color:aliceblue">
+        <td>Mã sản phẩm</td>
+        <td>Tên hàng</td>
+        <td>Hình ảnh</td>
+        <td>Số Lượng</td>
+        <td>Thành Tiền</td>
+
+    </tr>
+    @{ 
+        var tongsl = 0;
+        var thanhTien = 0;
+        var tongTien = 0;
+
+    }
+    @foreach (var item in Model)
+    {
+        WebApplication23.Models.SanPham s = new WebApplication23.Models.SanPham(item.maSP);
+        int vitri = ds.IndexOf(s);
+        s = ds[vitri];
+        tongsl += item.soLuong;
+        thanhTien = item.soLuong * s.giaTien;
+        tongTien += thanhTien;
+        <tr>
+            <td align="center">@s.maSP</td>
+            <td>@s.tenSP</td>
+            <td><img src="~/Content/nguyendongcinema.png" width="80" /></td>
+            <td align="center">@item.soLuong</td>
+            <td align="center">@s.giaTien</td>
+            <td align="center">@thanhTien</td>
+        </tr>
+    }
+</table>
+
+<br />
+<b>Số Lượng các sản phẩm quý khách đã mua là :@tongsl</b>
+<br />
+<b>Tổng tiền quý khách phải trả là : @tongTien</b>
+<br />
+@Html.ActionLink("Mua Tiếp đơn hàng khác ","Index","MuaBan")

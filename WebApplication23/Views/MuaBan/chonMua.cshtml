@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebApplication23.Models.SanPhamMua>
+@{
+    ViewBag.Title = "chonMua";
+}
+
+<h2>Chọn Mua</h2>
+@{ 
+    List<WebApplication23.Models.SanPham> ds = (List<WebApplication23.Models.SanPham>)Session["hanghoa"];
+
+    List<WebApplication23.Models.SanPhamMua> dsm = (List<WebApplication23.Models.SanPhamMua>)Session["giohang"];
+
+}
+
+<table class="table-bordered">
+    <tr style="background:#b6ff00">
+        <th align="center">Mã sản phẩm </th>
+        <th>Tên sản phẩm</th>
+        <th>Hình ảnh </th>
+        <th>Số Lượng</th>
+        <th>Gía tiền</th>
+        <th>Xóa sản phẩm</th>
+    </tr>
+
+    @foreach (var item in dsm)
+    {
+        WebApplication23.Models.SanPham sa = new WebApplication23.Models.SanPham(item.maSP);
+        int vitri = ds.IndexOf(sa);
+        sa = ds[vitri];
+        <tr>
+            <td align="center">@sa.maSP</td>
+            <td align="center">@sa.tenSP</td>
+            <td align="center"><img src="~/Content/nguyendongcinema.png"  width="80"/></td>
+            <td align="center">@item.soLuong</td>
+            <td align="center">@sa.giaTien</td>
+            <td align="center"><a href="@Url.Action("XoaSanPham", "MuaBan", new { masp = item.maSP })">Xoá</a></td>
+        </tr>
+    }
+</table>
+<br />
+<br />
+
+@Html.ActionLink("Mua Tiếp","Index","MuaBan")
+
+<br />
+@Html.ActionLink("Đặt Hàng","datMua","MuaBan")
